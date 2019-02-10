@@ -1,0 +1,65 @@
+a::after {
+    content: attr(data-action);
+    visibility: visible;
+    background-color:#9c27b0;
+    width: 5%;
+    color:#f4f3f5;
+}
+.dropdown-menu{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    font-size: 1rem;
+    color: #373a3c;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+}
+.toggle.btn {
+    min-width: 59px;
+    max-width: 80px;
+    max-height: 34px;
+    min-height: 39px;
+}
+.toggle label {
+  font-size: 20px;
+ 
+}
+
+.ct-series-a .ct-area {
+    fill: #f05b4f/*f11c3a*/ !important;
+    stroke:none !important;
+	fill-opacity: .50 !important;
+}
+
+.ct-series-b .ct-area {
+    fill: #3df4d2 !important;
+    stroke: none !important;
+    opacity: .50 !important;
+}
+
+/*
+.ct-area{
+	stroke:none !important;
+	fill-opacity: .1 !important;
+}
+*/
+.ct-chart .ct-label.ct-vertical.ct-start {
+   margin: 10px 0 0 0;
+}
+
+.ui-front {
+    z-index: 1500 !important;
+}
+.modal li {
+    word-wrap: break-word;
+}

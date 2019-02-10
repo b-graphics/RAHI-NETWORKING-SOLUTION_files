@@ -1,0 +1,95 @@
+function showUbnt(ubntdata,mac,uname,pass,remcheck)
+{
+	uname = (typeof uname === 'undefined') ? '' : uname;
+	pass = (typeof pass === 'undefined') ? '' : pass;
+	remcheck = (typeof remcheck === 'undefined') ? '' : remcheck;
+	var ubnt = "00:15:6D|00:27:22|04:18:D6|24:A4:3C|44:D9:E7|68:72:51|78:8A:20|80:2A:A8|B4:FB:E4|DC:9F:DB|F0:9F:C2|FC:EC:DA";
+	var macdata=mac.substr(0,8);
+	if(ubnt.includes(macdata)){
+		$('#ubntModal').modal();
+		var xmlhttp1;
+		var url1 = "cpe-ubnt.php?cpe_ip="+ubntdata+"&uname="+uname+"&pass="+pass+"&remcheck="+remcheck;
+		if (window.XMLHttpRequest)
+		{// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp1 = new XMLHttpRequest();
+		} else
+		{// code for IE6, IE5
+			xmlhttp1 = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp1.onreadystatechange = function ()
+		{
+			if (xmlhttp1.readyState == 4 && xmlhttp1.status == 200)
+			{
+				document.getElementById("ubntdata").innerHTML = xmlhttp1.responseText;
+				document.getElementById('mac').innerHTML=mac;
+				$('#mac').hide();
+				
+				$("#ubntScroll").css({'height':'400px','overflow-y':'auto','overflow-x':'hidden'});
+				$('#load2').hide();
+			}
+		}
+		xmlhttp1.open("GET", url1, true);
+		$('#load2').show();
+		$('#load1').hide();
+		document.getElementById("ubntdata").innerHTML="";
+		xmlhttp1.send();
+        }else{
+		window.open("http://"+ubntdata, "_blank");
+	}
+	
+}
+function showMac(mac)
+{
+	var xmlhttp2;
+	var url2 = "include/management/miscOperation.php?macvendor=" + mac;
+	
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp2 = new XMLHttpRequest();
+	} else
+	{// code for IE6, IE5
+		xmlhttp2 = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp2.onreadystatechange = function ()
+	{
+		if (xmlhttp2.readyState == 4 && xmlhttp2.status == 200)
+		{
+			document.getElementById("divdata").innerHTML = xmlhttp2.responseText;
+			$('#load1').hide();
+		}
+	}
+	xmlhttp2.open("GET", url2, true);
+	$('#load1').hide();
+	document.getElementById("divdata").innerHTML="";
+	xmlhttp2.send();
+}
+
+function routerIfRemove(aPeram){
+	var url = '';
+	$.each( aPeram, function( key, value ) {
+		if(key != 'file')
+			url+= key+"="+value+"&";
+		else
+                        url+= value+"?";
+
+	});
+	var url = url.substring(0, url.length-1);
+        $.ajax({
+                url: url,
+                        success: function(result){
+			var table =$('#'+aPeram.tablename).DataTable();
+			table.ajax.reload();
+			var data=JSON.parse(result);
+                        $.notify({
+                                icon: 'glyphicon glyphicon-exclamation-sign',
+                                message: data.msg,
+                                },{
+                                type: data.type,
+                                placement: {
+                                        from: 'top',
+                                        align: 'center'
+                                }
+                                });
+                        }
+        });
+}
